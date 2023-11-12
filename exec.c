@@ -9,25 +9,23 @@ void execute(const char *commands)
                 exit(EXIT_FAILURE);
         } else if (child_pid == 0)
         {
-                char arg[256];
+                char *arg[128];
                 int count = 0;
 
-                char *token = strtok((char *)command,"");
+                char *token = strtok((char *)commands," ");
                 while (token != NULL)
                 {
-                arg[count++] = token;
+		arg[count++] = token;
+		token = strtok(NULL, " ");
                 }
                 arg[count] = NULL;
 
                 execvp(arg[0], arg);
 
-                h_print("Error Executing command. \n");
+                h_print("Error Executing command.\n");
                 exit(EXIT_FAILURE);
-        } else
-        {
+        } else{
                 wait(NULL);
-
-
-        }
+	}
 
 }
