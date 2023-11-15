@@ -26,9 +26,11 @@ void execute(const char *commands)
 			token = strtok(NULL, " ");
 		}
 		arg[count] = NULL;
-		execvp(arg[0], arg);
-		h_print("Error Executing command.\n");
-		exit(EXIT_FAILURE);
+		if (execve(arg[0], arg, NULL) == -1)
+		{
+			perror("Error executing command");
+			exit(EXIT_FAILURE);
+		}
 	} else
 	{
 		wait(NULL);
